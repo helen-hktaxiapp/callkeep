@@ -254,6 +254,8 @@ static CXProvider* sharedProvider;
     if( uuid == nil) {
         uuid = [self createUUID];
     }
+    
+    if (callerId == (id)[NSNull null] || callerId.length == 0 ) return;
 
     //NSDictionary *extra = payload.dictionaryPayload[@"extra"];
 
@@ -520,6 +522,7 @@ contactIdentifier:(NSString * _Nullable)contactIdentifier
 #ifdef DEBUG
     NSLog(@"[CallKeep][reportNewIncomingCall] uuidString = %@", uuidString);
 #endif
+    if (!fromPushKit) return;
     int _handleType = [CallKeep getHandleType:handleType];
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:uuidString];
     CXCallUpdate *callUpdate = [[CXCallUpdate alloc] init];
